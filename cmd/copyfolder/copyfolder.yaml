@@ -1,0 +1,5 @@
+folders:
+- src: path/to/src
+  dst: path/to/dst
+- src: another/src
+  dst: another/dst
