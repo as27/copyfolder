@@ -42,12 +42,23 @@ func main() {
 		os.Exit(1)
 	}
 	for _, sd := range conf.Folders {
+		log.Println("Src:", sd.SrcFolder)
+		log.Println("Dst:", sd.DstFolder)
 		folderCopier := fs.NewFolderCopier(sd.SrcFolder, sd.DstFolder)
-		err := copyfolder.Copy(folderCopier)
-		if err != nil {
-			log.Println(err)
+		errs := copyfolder.Copy(folderCopier)
+		if len(errs) > 0 {
+			fmt.Println("------------------------------")
+			log.Println("Errors:")
+			for i, err := range errs {
+				log.Println(i, ":", err)
+			}
+			fmt.Println("------------------------------")
 		}
 	}
+	var userIn string
+	fmt.Println("Press ENTER to continue")
+	fmt.Scanln(&userIn)
+	fmt.Println(userIn)
 }
 
 func fileExists(filepath string) bool {
