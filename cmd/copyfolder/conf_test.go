@@ -6,7 +6,7 @@ import (
 )
 
 func TestConf(t *testing.T) {
-	var exp = Options{
+	var exp = Conf{
 		Folders: []SrcDst{
 			SrcDst{SrcFolder: "path/to/src", DstFolder: "path/to/dst"},
 			SrcDst{SrcFolder: "another/src", DstFolder: "another/dst"},
@@ -14,6 +14,6 @@ func TestConf(t *testing.T) {
 	c := loadConf("test.yaml")
 	if !reflect.DeepEqual(exp, *c) {
 
-		t.Fail()
+		t.Errorf("\nExp: %#v\nGot: %#v", exp, *c)
 	}
 }
