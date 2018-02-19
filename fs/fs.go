@@ -49,32 +49,29 @@ func (fc *FolderCopier) Copy(src, dst string) error {
 	if err != nil {
 		return err
 	}
-	fdst, err := os.Create(dst)
-	defer fdst.Close()
-	if err != nil {
-		return err
-	}
 
 	fsrc, err := os.Open(src)
 	defer fsrc.Close()
 	if err != nil {
 		return err
 	}
-
+	fdst, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
 	_, err = io.Copy(fdst, fsrc)
 	if err != nil {
 		return err
 	}
+	fdst.Close()
 	srcInfo, err := os.Stat(src)
 	if err != nil {
 		return err
 	}
 	mTime := srcInfo.ModTime()
 	err = os.Chtimes(dst, mTime, mTime)
-	if err != nil {
-		return err
-	}
-	return nil
+
+	return err
 }
 
 var a copyfolder.FolderCopier = &FolderCopier{}
